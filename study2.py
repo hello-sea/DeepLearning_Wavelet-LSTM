@@ -26,7 +26,7 @@ with open(filename, 'r') as file_to_read:
 
 ##plt.subplot(211)
 x = np.arange(len(data))
-y = data;
+y = data
 #plt.plot(data)
 ##plt.subplot(212)
 
