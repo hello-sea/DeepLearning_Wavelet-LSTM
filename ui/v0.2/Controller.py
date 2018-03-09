@@ -2,6 +2,8 @@
 # pt5
 
 from View import *
+from model.seg import *
+
 
 class Controller(QtWidgets.QMainWindow):
     def __init__(self):
