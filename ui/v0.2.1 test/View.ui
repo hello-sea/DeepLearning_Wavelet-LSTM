@@ -131,9 +131,11 @@
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
-      <widget class="QWidget" name="page_Canvas_Home"/>
+      <widget class="QWidget" name="page_Canvas_Home">
+       <layout class="QGridLayout" name="gridLayout_Canvas_Home"/>
+      </widget>
       <widget class="QWidget" name="page_Canvas_FFT">
        <layout class="QGridLayout" name="gridLayout_Canvas_FFT">
         <property name="leftMargin">
@@ -152,6 +154,15 @@
          <number>0</number>
         </property>
        </layout>
+      </widget>
+      <widget class="QWidget" name="page_Canvas_CWT">
+       <layout class="QGridLayout" name="gridLayout_Canvas_CWT"/>
+      </widget>
+      <widget class="QWidget" name="page_Canvas_LSTM">
+       <layout class="QGridLayout" name="gridLayout_Canvas_LSTM"/>
+      </widget>
+      <widget class="QWidget" name="page_Canvas_Set">
+       <layout class="QGridLayout" name="gridLayout_Canvas_Set"/>
       </widget>
      </widget>
     </item>
