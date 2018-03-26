@@ -77,14 +77,17 @@ def ShowCoef(coef,freqs):
     X = range(0, len(coef), 10)
     Y = range(0, len(coef[0]), 100)
     X, Y = np.meshgrid(X, Y)
-    for i in 
-    R = np.sqrt(X**2 + Y**2)
-    Z = np.sin(R)
+    print(x)
+    # for i in X:
+        # for j in Y:
+
+    # R = np.sqrt(X**2 + Y**2)
+    # Z = np.sin(R)
 
     # 具体函数方法可用 help(function) 查看，如：help(ax.plot_surface)
-    ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap='rainbow')
+    # ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap='rainbow')
 
-    plt.show()
+    # plt.show()
 
 
 if __name__=="__main__":
