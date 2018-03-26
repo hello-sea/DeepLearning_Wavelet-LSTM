@@ -115,13 +115,16 @@ class Controller(QtWidgets.QMainWindow):
     
     def toolButton_CWT_clicked(self):
         if self.stateDiagram >=2: # 2-已完成FFT
-            
 
-            self.paintCWT.figureClear()
-            self.paintCWT.setAx(0,1) # 第 1 行, 共 1 行
-            #self.paintCWT.paint(self.segFile.dataList[ self.segFile.TapeNumCurrent ].data, 0)
             coef,freqs = Algorithm.MyCWT( self.segFile.dataList[ self.segFile.TapeNumCurrent ].data )
-            self.paintCWT.paint(0,coef)
+            
+            self.paintCWT.figureClear()
+
+            # self.paintCWT.setAx(0,2) # 第 1 行, 共 2 行
+            # self.paintCWT.MyMatshow(0,coef)
+
+            # self.paintCWT.setAx(1,2) # 第 2 行, 共 2 行
+            self.paintCWT.MyPlot_surface(1,coef)
             
             self.toolButton_NavigationBar_Update(2)
 

@@ -2,7 +2,7 @@
 import pywt
 import numpy as np
 import matplotlib.pyplot as plt
-
+from mpl_toolkits.mplot3d import Axes3D
 
 #--读取数据--
 def ReadFile(filename):
@@ -51,13 +51,39 @@ def ShowCoef(coef,freqs):
     #from mpl_toolkits.mplot3d import Axes3D
     #ax = Axes3D(fig)
         
-    fig = plt.figure()
+    # fig = plt.figure()
 
     #--时频(尺度)度--
-    plt.matshow( coef )
+    # plt.matshow( coef )
     #f = pywt.scale2frequency(wavename,scal,precision=8); #将尺度转换为频率
     #print(f);
     
+    #三维图
+    # x = []
+    # y = []
+    # z = []
+    # for i in range(0,len(coef)):
+    #     for j in range(0,len(coef[i])):
+    #         x.append(i)
+    #         y.append(j)
+    #         z.append(coef[i][j])
+    # ax = fig.add_subplot(111, projection='3d')
+    # ax.plot_trisurf(x, y, z)
+    
+    # plt.show()
+
+    fig = plt.figure()
+    ax = Axes3D(fig)
+    X = range(0, len(coef), 10)
+    Y = range(0, len(coef[0]), 100)
+    X, Y = np.meshgrid(X, Y)
+    for i in 
+    R = np.sqrt(X**2 + Y**2)
+    Z = np.sin(R)
+
+    # 具体函数方法可用 help(function) 查看，如：help(ax.plot_surface)
+    ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap='rainbow')
+
     plt.show()
 
 
