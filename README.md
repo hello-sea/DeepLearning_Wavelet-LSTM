@@ -1,6 +1,6 @@
-**Tip**: This page can be translated by *Chrome Google Translate*
+**Tip**:  This page can be translated by *Chrome Google Translate*
 
-**提示**：本页面支持Chrome Google翻译
+**提示**: 本页面支持Chrome Google翻译
 
 ***
 # Wavelet_LSTM
