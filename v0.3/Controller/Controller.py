@@ -32,7 +32,7 @@ class Controller(QtWidgets.QMainWindow):
         self.ui.gridLayout_Canvas_FFT.addWidget(self.paintFFT)
         
         self.paintCWT = MyFigureCanvasCWT(2)
-        self.ui.gridLayout_Canvas_CWT.addWidget(self.paintCWT)
+        self.ui.gridLayout_Canvas_CWT_Paint.addWidget(self.paintCWT)
 
         self.paintLSTM = MyFigureCanvasLSTM(3)
         self.ui.gridLayout_Canvas_LSTM.addWidget(self.paintLSTM)
@@ -72,6 +72,17 @@ class Controller(QtWidgets.QMainWindow):
                 for i in range(0,self.segFile.tapeNum):
                     self.paintFFT.setAx(i,self.segFile.tapeNum,'2d')
                     self.paintFFT.paint(i,self.segFile.dataList[i].data)
+                
+                # cwtmatr,freqs = Algorithm.MyPywtCWT( self.segFile.dataList[ self.segFile.TapeNumCurrent ].data )
+                cwtmatr = Algorithm.MyScipyCwt(self.segFile.dataList[ self.segFile.TapeNumCurrent ].data, 64)
+                self.paintCWT.figureClear()
+
+                # self.paintCWT.setAx(0,2) # 第 1 行, 共 2 行
+                # self.paintCWT.MyMatshow(0,cwtmatr)
+
+                self.paintCWT.setAx(0,1,'3d') # 第 2 行, 共 2 行
+                self.paintCWT.MyPlot_surface(0, cwtmatr, 1, 10)
+         
 
  
     # 导航栏更新
@@ -116,20 +127,6 @@ class Controller(QtWidgets.QMainWindow):
     def toolButton_CWT_clicked(self):
         if self.stateDiagram >=2: # 2-已完成FFT
             self.toolButton_NavigationBar_Update(2)
-
-            # cwtmatr,freqs = Algorithm.MyPywtCWT( self.segFile.dataList[ self.segFile.TapeNumCurrent ].data )
-            cwtmatr = Algorithm.MyScipyCwt(self.segFile.dataList[ self.segFile.TapeNumCurrent ].data, 128)
-            self.paintCWT.figureClear()
-
-            # self.paintCWT.setAx(0,2) # 第 1 行, 共 2 行
-            # self.paintCWT.MyMatshow(0,cwtmatr)
-
-            self.paintCWT.setAx(0,1,'3d') # 第 2 行, 共 2 行
-            self.paintCWT.MyPlot_surface(0, cwtmatr, 1, 1)
-            
-            
-
-
         else:
             QtWidgets.QMessageBox.warning(
                  self, "Warning", Message().dict['Warning(1002)'], QtWidgets.QMessageBox.Yes)

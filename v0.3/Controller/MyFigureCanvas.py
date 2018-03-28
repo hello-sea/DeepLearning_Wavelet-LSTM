@@ -132,6 +132,14 @@ class MyFigureCanvasCWT(MyFigureCanvas):
         self.axList[lineNumber].matshow(data)
         self.canvas.draw()
 
+    def My3DView_init(self,lineNumber,MyElev,MyAzim):
+        '''     - lineNumber：指定第几幅图
+            view_init(elev=MyElev,azim=MyAzim) 
+                - elev: 竖直 角度
+                - azim: 水平 角度
+        '''
+        self.axList[lineNumber].view_init(elev=MyElev,azim=MyAzim)
+
     def MyPlot_surface(self, lineNumber, data, stepX, stepY):
         ''' stepX = 2  # 采样步长 X
             stepY = 10  # 采样步长 Y
@@ -151,8 +159,8 @@ class MyFigureCanvasCWT(MyFigureCanvas):
 
         # 具体函数方法可用 help(function) 查看，如：help(ax.plot_surface)
         self.axList[lineNumber].plot_surface(XX, YY, ZZ, rstride=1, cstride=1, cmap='rainbow')
-
-        self.canvas.draw()
+        
+        # self.canvas.draw()
 
 class MyFigureCanvasLSTM(MyFigureCanvas):
     def paint(self, lineNumber, data):

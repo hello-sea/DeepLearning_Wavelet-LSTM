@@ -44,7 +44,7 @@ def MyScipyCwt(data,MyWidths):
         - signal.ricker返回一个Ricker小波，也被称为“墨西哥帽子小波”   
     '''
     cwtmatr =  signal.cwt(sig, signal.ricker, widths) 
-    cwtmatr = np.abs(cwtmatr)
-    return cwtmatr
+    # cwtmatr = np.abs(cwtmatr)
     # plt.imshow(cwtmatr, extent=[-1, 1, 31, 1], cmap='PRGn', aspect='auto', vmax=abs(cwtmatr).max(), vmin=-abs(cwtmatr).max())
+    return cwtmatr
 
