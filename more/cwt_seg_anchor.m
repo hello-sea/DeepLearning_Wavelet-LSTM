@@ -32,7 +32,8 @@ title('小波时频图(二维)');
 
 %%
 figure(3)
-mesh(t,f,abs(coefs)); 
+%mesh(t,f,abs(coefs)); 
+mesh(t,f,coefs); 
 axis tight;
 colorbar;
 xlabel('时间 t/s');

@@ -1,20 +1,11 @@
-# encoding: utf-8 
-import pywt
-import numpy as np
+from scipy import signal
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+import numpy as np
 
-
-fig = plt.figure()
-ax = Axes3D(fig)
-X = range(0, 1800, 1)
-Y = range(0, 1800, 1)
-X, Y = np.meshgrid(X, Y)
-R = np.sqrt(X**2 + Y**2)
-Z = np.sin(R)
-
-
-# 具体函数方法可用 help(function) 查看，如：help(ax.plot_surface)
-ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap='rainbow')
-
+t = np.linspace(1, 201, 200, endpoint=False)
+sig  = np.cos(2 * np.pi * 7 * t) + signal.gausspulse(t - 0.4, fc=2)
+widths = np.arange(1, 31)
+cwtmatr = signal.cwt(sig, signal.ricker, widths)
+plt.imshow(cwtmatr, extent=[1, 201, 31, 1], cmap='PRGn', aspect='auto',
+          vmax=abs(cwtmatr).max(), vmin=-abs(cwtmatr).max())
 plt.show()

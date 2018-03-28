@@ -70,7 +70,7 @@ class Controller(QtWidgets.QMainWindow):
                 
                 self.paintCWT.figureClear()
                 for i in range(0,self.segFile.tapeNum):
-                    self.paintFFT.setAx(i,self.segFile.tapeNum)
+                    self.paintFFT.setAx(i,self.segFile.tapeNum,'2d')
                     self.paintFFT.paint(i,self.segFile.dataList[i].data)
 
  
@@ -115,18 +115,19 @@ class Controller(QtWidgets.QMainWindow):
     
     def toolButton_CWT_clicked(self):
         if self.stateDiagram >=2: # 2-已完成FFT
+            self.toolButton_NavigationBar_Update(2)
 
-            coef,freqs = Algorithm.MyCWT( self.segFile.dataList[ self.segFile.TapeNumCurrent ].data )
-            
+            # cwtmatr,freqs = Algorithm.MyPywtCWT( self.segFile.dataList[ self.segFile.TapeNumCurrent ].data )
+            cwtmatr = Algorithm.MyScipyCwt(self.segFile.dataList[ self.segFile.TapeNumCurrent ].data, 128)
             self.paintCWT.figureClear()
 
             # self.paintCWT.setAx(0,2) # 第 1 行, 共 2 行
-            # self.paintCWT.MyMatshow(0,coef)
+            # self.paintCWT.MyMatshow(0,cwtmatr)
 
-            # self.paintCWT.setAx(1,2) # 第 2 行, 共 2 行
-            self.paintCWT.MyPlot_surface(1,coef)
+            self.paintCWT.setAx(0,1,'3d') # 第 2 行, 共 2 行
+            self.paintCWT.MyPlot_surface(0, cwtmatr, 1, 1)
             
-            self.toolButton_NavigationBar_Update(2)
+            
 
 
         else:

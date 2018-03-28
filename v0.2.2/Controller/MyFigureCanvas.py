@@ -18,37 +18,37 @@ import numpy as np
 ''' ==================== ↓  绘图类   ↓ ==================== '''
 
 
-class MyAxes3D(QtWidgets.QWidget):
-    def __init__(self,figureNumber): 
-        super(MyAxes3D, self).__init__(figureNumber)
+# class MyAxes3D(QtWidgets.QWidget):
+#     def __init__(self,figureNumber): 
+#         super(MyAxes3D, self).__init__(figureNumber)
         
-        ''' 严重警告: self.figure = plt.figure( 0 ) 0是指定全局标识 '''
-        self.figureNumber = figureNumber
-        self.figure = plt.figure(self.figureNumber)
+#         ''' 严重警告: self.figure = plt.figure( 0 ) 0是指定全局标识 '''
+#         self.figureNumber = figureNumber
+#         self.figure = plt.figure(self.figureNumber)
 
-        self.canvas = FigureCanvas(self.figure)
+#         self.canvas = FigureCanvas(self.figure)
 
-        self.layout = QtWidgets.QGridLayout()
-        self.layout.setContentsMargins(0, 0, 0, 0)
-        self.layout.setSpacing(0) #设置总的外围边框
-        self.layout.addWidget(self.canvas)
-        self.setLayout(self.layout)
+#         self.layout = QtWidgets.QGridLayout()
+#         self.layout.setContentsMargins(0, 0, 0, 0)
+#         self.layout.setSpacing(0) #设置总的外围边框
+#         self.layout.addWidget(self.canvas)
+#         self.setLayout(self.layout)
 
-    def MyPlot_surface(self, lineNumber, data):
-        pass
-        y = len(data)
-        x = len(data[0])
-        arrayY = range(0, y)
-        arrayX = range(0, x)
+#     def MyPlot_surface(self, lineNumber, data):
+#         pass
+#         y = len(data)
+#         x = len(data[0])
+#         arrayY = range(0, y)
+#         arrayX = range(0, x)
 
-        ax = Axes3D( self.figure )
-        # ax.set_axes_locator(self.axList[lineNumber])
-        ax.plot_surface(arrayX, arrayY, data,rstride=1, cstride=1, cmap='rainbow')
+#         ax = Axes3D( self.figure )
+#         # ax.set_axes_locator(self.axList[lineNumber])
+#         ax.plot_surface(arrayX, arrayY, data,rstride=1, cstride=1, cmap='rainbow')
 
-        # self.axList[lineNumber].clear()
-        # self.axList[lineNumber].matsplot_surfacehow(data)
+#         # self.axList[lineNumber].clear()
+#         # self.axList[lineNumber].matsplot_surfacehow(data)
         
-        self.canvas.draw()
+#         self.canvas.draw()
 
 
 class MyFigureCanvas(QtWidgets.QWidget):
@@ -75,7 +75,7 @@ class MyFigureCanvas(QtWidgets.QWidget):
         self.rightMargin = 5
         self.bottomMargin = 20
 
-    def setAx(self, lineNumber, numberOfRows): 
+    def setAx(self, lineNumber, numberOfRows, MyProjection): 
         # lineNumber: 第几行, numberOfRows: 行数
         # 如 setAx(0,1) 表示 第 1 行, 共 1 行
         ''' 
@@ -96,11 +96,21 @@ class MyFigureCanvas(QtWidgets.QWidget):
         self.y = ( self.height()*(self.numberOfRows - (lineNumber + 1 ) ) /self.numberOfRows + self.bottomMargin )/self.height()
         self.w = (self.width() - self.leftMargin - self.rightMargin)/self.width()
         self.h = (self.height()/self.numberOfRows - self.topMargin - self.bottomMargin)/self.height()
-        ax = self.figure.add_axes([self.x, self.y, self.w, self.h])
+        
+        if MyProjection == '3d':
+            # ax = self.figure.add_axes([self.x, self.y, self.w, self.h],projection='3d')
+            ax = self.figure.add_axes([self.x, self.y, self.w, self.h],projection = MyProjection)
+            ax.set_xlabel("f/kHZ")
+            ax.set_ylabel("t/us")
+            # ax.set_title("a straight line (OO)")
+        else :
+            ax = self.figure.add_axes([self.x, self.y, self.w, self.h])
+            # ax.set_xlabel("x value")
+            # ax.set_ylabel("y value")
+            # ax.set_title("a straight line (OO)")
+        
         self.axList.append( ax )        
-        # self.axList[lineNumber]set_title("a straight line (OO)")
-        # self.axList[lineNumber]set_xlabel("x value")
-        # self.axList[lineNumber]set_ylabel("y value")
+
         
     def paint(self, lineNumber, data):
         # lineNumber: 第几行, data: 绘图数据
@@ -111,56 +121,41 @@ class MyFigureCanvas(QtWidgets.QWidget):
         self.axList = []
 
 class MyFigureCanvasFFT(MyFigureCanvas):
-    # def __init__(self,figureNumber): 
-    #     super(MyFigureCanvasFFT, self).__init__(figureNumber)
-
     def paint(self, lineNumber, data):
-        # lineNumber: 第几行, data: 绘图数据
         self.axList[lineNumber].clear()
         self.axList[lineNumber].plot(data)
         self.canvas.draw()
-    
-class MyFigureCanvasCWT(MyFigureCanvas):
-    # def __init__(self,figureNumber): 
-    #     super(MyFigureCanvasCWT, self).__init__(figureNumber)
-        
-    def MyMatshow(self, lineNumber, data):
-        # lineNumber: 第几行, data: 绘图数据
+
+class MyFigureCanvasCWT(MyFigureCanvas):     
+    def MyMatshow(self, lineNumber, data): 
         self.axList[lineNumber].clear()
         self.axList[lineNumber].matshow(data)
         self.canvas.draw()
 
-    def MyPlot_surface(self, lineNumber, data):
-        pass
-        # y = len(data)
-        # x = len(data[0])
-        # arrayY = range(0, y)
-        # arrayX = range(0, x)
-
+    def MyPlot_surface(self, lineNumber, data, stepX, stepY):
+        ''' stepX = 2  # 采样步长 X
+            stepY = 10  # 采样步长 Y
+        '''
+        # ax = self.figure.add_axes([0.05,0.05,0.9,0.9],projection='3d')
         # ax = Axes3D( self.figure )
-        # # ax.set_axes_locator(self.axList[lineNumber])
-        # ax.plot_surface(arrayX, arrayY, data,rstride=1, cstride=1, cmap='rainbow')
 
-        # # self.axList[lineNumber].clear()
-        # # self.axList[lineNumber].matsplot_surfacehow(data)
-        dataX = len(data)
-        dataY = len(data[0])
-        ax = Axes3D(self.figure)
-        X = np.arange(0, dataX)
-        Y = np.arange(0, dataY)
-        X, Y = np.meshgrid(X, Y)
-        # Z = data
+        X = range(0, len(data), stepX)      #频率
+        Y = range(0, len(data[0]), stepY)   #时间
+
+        XX , YY= np.meshgrid(X, Y)  # XX[i]、YY[i]代表时间 ; XX[0][i]、YY[0][i]代表频率
+        ZZ = np.zeros([len( Y ), len( X )])  # ZZ[i]代表时间、ZZ[0][i]代表频率
+
+        for i in range(0, len( Y )):
+            for j in range(0, len( X )):
+                ZZ[i][j] = data[ X[j] ][ Y[i] ]
 
         # 具体函数方法可用 help(function) 查看，如：help(ax.plot_surface)
-        # ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap='rainbow')
+        self.axList[lineNumber].plot_surface(XX, YY, ZZ, rstride=1, cstride=1, cmap='rainbow')
 
         self.canvas.draw()
 
 class MyFigureCanvasLSTM(MyFigureCanvas):
-    # def __init__(self,figureNumber): 
-    #     super(MyFigureCanvasLSTM, self).__init__(figureNumber)
     def paint(self, lineNumber, data):
-        # lineNumber: 第几行, data: 绘图数据
         pass
 
 

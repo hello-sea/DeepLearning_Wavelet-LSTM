@@ -19,7 +19,8 @@ coefs=cwt(s,scal,wavename);     %得到小波系数
 f=scal2frq(scal,wavename,1/fs);    %将尺度转换为频率
 
 figure(2)
-imagesc(t,f,abs(coefs));            %绘制色谱图
+%imagesc(t,f,abs(coefs));            %绘制色谱图
+imagesc(t,f,coefs);            %绘制色谱图
 colorbar;
 xlabel('时间 t/s');
 ylabel('频率 f/Hz');
@@ -27,7 +28,8 @@ title('小波时频图(二维)');
 
 %%
 figure(3)
-mesh(t,f,abs(coefs)); 
+%mesh(t,f,abs(coefs)); 
+mesh(t,f,coefs); 
 axis tight; 
 colorbar;
 xlabel('时间 t/s');

@@ -4,6 +4,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
+from scipy import signal
+
+
 #--读取数据--
 def ReadFile(filename):
     #filename = 'data.txt' 
@@ -24,29 +27,38 @@ def ReadFile(filename):
 #--连续小波变换 cwt --
 def MyCWT(data):    
     #--原始数据初始化--
-    x = np.arange(len(data))
-    y = data
+    # x = np.arange(len(data))
+    # y = data
 
-    Fs = 500000 #采样频率：500 000 Hz 
-                #采样周期：2 us
-    #--尺度计算--
-    wavename = 'gaus1'
-    totalscal = 64;    #尺度序列的长度
+    # Fs = 500000 #采样频率：500 000 Hz 
+    #             #采样周期：2 us
+    # #--尺度计算--
+    # wavename = 'gaus1'
+    # totalscal = 64;    #尺度序列的长度
     
-    #Fc = 2000;          #小波中心频率(Hz)（“主波峰之间的差值”=2000Hz）
-                        #Fc = pywt.central_frequency(wavename, precision=8) 
-    Fc = pywt.central_frequency(wavename)               
+    # #Fc = 2000;          #小波中心频率(Hz)（“主波峰之间的差值”=2000Hz）
+    #                     #Fc = pywt.central_frequency(wavename, precision=8) 
+    # Fc = pywt.central_frequency(wavename)               
                    
-    C = 2*Fc*totalscal; # C 为常数，C = 2*Fc/totalscal
-    scal= C/np.arange(1,totalscal+1);   #尺度序列,范围（2*Fc,inf）
+    # C = 2*Fc*totalscal; # C 为常数，C = 2*Fc/totalscal
+    # scal= C/np.arange(1,totalscal+1);   #尺度序列,范围（2*Fc,inf）
 
-    #--连续小波变换--
-    coef,freqs = pywt.cwt(y,scal,wavename)
+    # #--连续小波变换--
+    # # coef,freqs = pywt.cwt(y,scal,wavename)
     
-    return coef,freqs
+    # # return coef ,freqs
+    # data = map(float,data)
+    # data1  = map(lambda x: float(x),data)
+    data1 = np.ones(len(data),np.float)  
+    for i in range(0,len(data)): data1[i] = float(data[i])
+
+    widths = np.arange(1, 31)
+    
+    cwtmatr =  signal.cwt(data1, signal.ricker, widths)
+    return cwtmatr
 
     
-def ShowCoef(coef,freqs):
+def ShowCoef(coef):
 
     #from mpl_toolkits.mplot3d import Axes3D
     #ax = Axes3D(fig)
@@ -62,6 +74,7 @@ def ShowCoef(coef,freqs):
     # x = []
     # y = []
     # z = []
+    
     # for i in range(0,len(coef)):
     #     for j in range(0,len(coef[i])):
     #         x.append(i)
@@ -74,26 +87,40 @@ def ShowCoef(coef,freqs):
 
     fig = plt.figure()
     ax = Axes3D(fig)
-    X = range(0, len(coef), 10)
-    Y = range(0, len(coef[0]), 100)
-    X, Y = np.meshgrid(X, Y)
-    print(x)
-    # for i in X:
-        # for j in Y:
+    
+    data = coef
 
+    stepX = 1  # 采样步长 X
+    stepY = 10 # 采样步长 Y
+    
+    X = range(0, len(data), stepX)
+    Y = range(0, len(data[0]), stepY)
+    ZZ = np.zeros([len(X), len(Y)])
+
+    YY, XX = np.meshgrid(Y, X)
+    # print(XX)
+    # print(YY)
+    # print(ZZ)
+    
+    # print(printData)
+    for i in range(0, len(X)):
+        for j in range(0, len(Y)):
+            ZZ[i][j] = data[ X[i] ][ Y[j] ]
     # R = np.sqrt(X**2 + Y**2)
     # Z = np.sin(R)
+    # print(ZZ)
+
 
     # 具体函数方法可用 help(function) 查看，如：help(ax.plot_surface)
-    # ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap='rainbow')
+    ax.plot_surface(XX, YY, ZZ, rstride=1, cstride=1, cmap='rainbow')
 
-    # plt.show()
+    plt.show()
 
 
 if __name__=="__main__":
     data = ReadFile('data.txt')
-    coef,freqs = MyCWT(data)
-    ShowCoef(coef,freqs)
+    coef = MyCWT(data)
+    ShowCoef(coef)
     
     
     
