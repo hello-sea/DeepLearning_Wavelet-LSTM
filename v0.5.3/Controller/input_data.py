@@ -4,7 +4,7 @@ import os.path
 import sys
 import re
 import os
-import json
+
 
 #python pkl 文件读写
 import pickle as pickle
@@ -13,16 +13,13 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 import numpy as np
 
+import json
 def myJsonLoad(filePath):
     '''把文件打开从字符串转换成数据类型'''
     with open(filePath,'rb') as load_file:
         load_dict = json.load(load_file)
         return load_dict
 
-def load_id_zh():
-    return myJsonLoad('../Data/logo_30/id_label_zh.json') 
-def load_id_us():
-    return myJsonLoad('../Data/logo_30/id_label_us.json') 
 
 class MyData():
     def __init__(self):
@@ -37,7 +34,6 @@ class MyData():
 def eachFile(filepath):
     pathDir =  os.listdir(filepath)
     data = MyData()
-    id_dict = load_id_us()
     for allDir in pathDir:
         child = os.path.join('%s/%s' % (filepath, allDir))
         if os.path.isfile(child):
@@ -46,34 +42,16 @@ def eachFile(filepath):
             theTpye = re.split('\.',allDir)[0]
             # print(theTpye)
             data.data_tpye.append( theTpye )
-            data.labels.append( int(id_dict[theTpye]) -1 )
     # # 显示
     # for i in array:
     #     print(i)      
     return data
 
 
-def myFastGFile(py_data):
+def myReadFile(py_data):
     # 新建一个Session
     with tf.Session() as sess:
-        '''
-        image_raw_data = tf.gfile.FastGFile(py_data.data_filePath[0], 'rb').read()
-        img_data = tf.image.decode_jpeg(image_raw_data)
-        plt.imshow(img_data.eval())
-        plt.show()
 
-        resized = tf.image.resize_images(img_data, [28, 28], method=0)
-        print(resized)
-        resized = tf.reshape(resized, [28, 28, 3]) #最后一维代表通道数目，如果是rgb则为3 
-        print(resized)
-        # TensorFlow的函数处理图片后存储的数据是float32格式的，需要转换成uint8才能正确打印图片。
-        print("Digital type: ", resized.dtype)
-        resized = np.asarray(resized.eval(), dtype='uint8')
-        
-        # tf.image.convert_image_dtype(rgb_image, tf.float32)
-        plt.imshow(resized)
-        plt.show()
-        '''
         # path = py_data.data_filePath[0]
         for path in py_data.data_filePath:
             # 读取文件
@@ -138,16 +116,18 @@ def saveData(py_data, filePath_data, filePath_labels):
 def run(filePath_loadData, filePath_data, filePath_labels):
 
     loadData = eachFile(filePath_loadData) #注意：末尾不加/
-    myFastGFile(loadData)  
-    saveData(loadData, filePath_data, filePath_labels)
+    # myReadFile(loadData)  
+    # saveData(loadData, filePath_data, filePath_labels)
     
+    print(loadData.data_fileName)
+
     '''
     trainData = eachFile("../Data/logos/train") #注意：末尾不加/
     # for i in range(0,len(data.data_fileName)):
     #     print(data.data_tpye[i])
     #     print(data.data_oneHot_labels[i])
 
-    myFastGFile(trainData)  
+    myReadFile(trainData)  
     saveData(trainData, 'Model/train_data.plk', 'Model/train_labels.plk')
     
     # print(trainData.data[0].shape)
@@ -159,10 +139,19 @@ def run(filePath_loadData, filePath_data, filePath_labels):
 if __name__ == "__main__":
     print('目前系统的编码为：',sys.getdefaultencoding()) 
 
-    # run("../Data/logos_test", 'Model/test_data.plk', 'Model/test_labels.plk')
+    ########################################################################
+    '''  训练数据生成  '''
 
-    run("../Data/logos/train", 'Model/train_data.plk', 'Model/train_labels.plk')
-    #       #注意：末尾不加/
+    path = 'C:/锚索测量数据库/LSTMs训练数据'  #注意：末尾不加/
+    path_TagJson = 'C:/锚索测量数据库/LSTMs训练数据/tag.json'
 
-    run("../Data/logos/eval",  'Model/eval_data.plk', 'Model/eval_labels.plk')
-    #       #注意：末尾不加/
+    TagDict = myJsonLoad(path_TagJson)
+
+    for i in TagDict:
+        for j in range(1,5):
+            print(i['items'][str(j)])
+
+    # run( path, 'Model/train_seg_data.plk', 'Model/train_seg_labels.plk')
+    #  #注意：path末尾不加/
+
+
