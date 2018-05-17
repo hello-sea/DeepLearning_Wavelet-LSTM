@@ -1,0 +1,9 @@
+Metadata-Version: 1.1
+Name: mlab
+Version: 1.1.4
+Summary: Mlab is a high-level python to Matlab bridge that lets Matlab look like a normal python library
+Home-page: https://github.com/ewiger/mlab
+Author: Yauhen Yakimovich
+Author-email: eugeny.yakimovitch@gmail.com
+License: MIT
+Download-URL: https://github.com/ewiger/mlab/tarball/master

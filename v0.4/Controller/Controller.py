@@ -74,14 +74,15 @@ class Controller(QtWidgets.QMainWindow):
                     self.paintFFT.paint(i,self.segFile.dataList[i].data)
                 
                 # cwtmatr,freqs = Algorithm.MyPywtCWT( self.segFile.dataList[ self.segFile.TapeNumCurrent ].data )
-                cwtmatr = Algorithm.MyScipyCwt(self.segFile.dataList[ self.segFile.TapeNumCurrent ].data, 64)
+                cwtmatr = Algorithm.MyScipyCwt(self.segFile.dataList[ self.segFile.TapeNumCurrent ].data, 128)
                 self.paintCWT.figureClear()
 
                 # self.paintCWT.setAx(0,2) # 第 1 行, 共 2 行
                 # self.paintCWT.MyMatshow(0,cwtmatr)
 
                 self.paintCWT.setAx(0,1,'3d') # 第 2 行, 共 2 行
-                self.paintCWT.MyPlot_surface(0, cwtmatr, 1, 10)
+                self.paintCWT.MyPlot_surface(0, cwtmatr, 1, 10) # 第几行、数据、绘图采样步长：频率、绘图采样步长：时间
+
          
 
  

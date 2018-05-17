@@ -1,0 +1,34 @@
+https://blog.csdn.net/u010858605/article/details/64128466/
+
+1.更新pip(管理员)
+python -m pip install --upgrade pip
+
+2.输入清华仓库镜像，这样更新会快一些
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+conda config --set show_channel_urls yes
+
+3.(可选)
+利用Anaconda创建一个python3.5的环境，环境名称为tensorflow ，输入下面命令：
+conda create -n tensorflow python=3.5
+
+开始菜单->Anaconda3—>Anaconda Navigator，点击左侧的Environments，可以看到tensorflow的环境已经创建好了。
+
+在Anaconda Prompt中启动tensorflow环境：
+activate tensorflow
+
+
+4.安装cpu版本的TensorFlow
+pip install --upgrade --ignore-installed tensorflow
+注：这里没有介绍GPU版本的安装方法，GPU版本需要安装cuda8+cudnn5，如需要的请搜索其他博文。
+
+5.测试tensorflow 
+在Anaconda Prompt中启动tensorflow环境，并进入python环境。 
+
+测试代码如下:
+
+import tensorflow as tf
+hello = tf.constant('Hello, TensorFlow!')
+sess = tf.Session()
+print(sess.run(hello))
+
+

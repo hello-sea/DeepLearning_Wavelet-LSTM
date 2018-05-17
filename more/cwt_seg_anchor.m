@@ -14,8 +14,9 @@ wavename='cmor3-3'; %选用带宽参数和中心频率均为3的复morlet小波
 totalscal=128 ;      %尺度序列的长度，即scal的长度
 fc=centfrq(wavename);   %小波的中心频率
 % fc = 730;
-cparam=2*fc*totalscal;  %为得到合适的尺度所求出的参数
+cparam=2*fc*totalscal  %为得到合适的尺度所求出的参数
 a=totalscal:-1:1;       %尺度序列
+
 scal=cparam./a;         %得到各个尺度，以使转换得到频率序列为等差序列
 
 delta = 500000;         %采样频率
@@ -32,11 +33,19 @@ title('小波时频图(二维)');
 
 %%
 figure(3)
+t = t.*100;
+f =f./10^5/2.5*128;
 %mesh(t,f,abs(coefs)); 
-mesh(t,f,coefs); 
+%coefs1 = coefs(1:128,:);
+%mesh(f(1:128),t,abs(coefs1')); 
+mesh(f,t,abs(coefs')); 
+
+%mesh(t,f,coefs); 
 axis tight;
 colorbar;
-xlabel('时间 t/s');
-ylabel('频率 f/Hz');
-title(['小波时频图（三维）','(',num2str(wavename),')']);
+xlabel('SCALE(尺度)');
+ylabel('TRANSLATION(时间-转换)');
+zlabel('AMPLITUDE(振幅)');
+title('小波时频图');
+%title(['小波时频图','(',num2str(wavename),')']);
 %%
