@@ -1,4 +1,4 @@
-1.
+﻿1.
 警告：
 FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
   from ._conv import register_converters as _register_converters
@@ -6,6 +6,8 @@ FutureWarning: Conversion of the second argument of issubdtype from `float` to `
   https://stackoverflow.com/questions/48340392/futurewarning-conversion-of-the-second-argument-of-issubdtype-from-float-to
   这是由于h5py和numpy之间的版本冲突造成的。你需要做的就是通过命令降低你的numpy版本
   (管理员)  pip install numpy==1.13.0
+
+  (管理员)  pip install numpy==1.13.3
 
 
 

@@ -17,8 +17,6 @@ from tensorflow.contrib import rnn
 from tensorflow.examples.tutorials.mnist import input_data
 
 
-
-
 def RNN(x, weights, biases):
     timesteps = 28 # timesteps
     num_hidden = 128 # hidden layer num of features
@@ -40,8 +38,7 @@ def RNN(x, weights, biases):
     # Linear activation, using rnn inner loop last output
     return tf.matmul(outputs[-1], weights['out']) + biases['out']
 
-
-def main():
+def main(): 
 
     '''
     To classify images using a recurrent neural network, we consider every image
@@ -75,24 +72,6 @@ def main():
     }
 
 
-    def RNN(x, weights, biases):
-
-        # Prepare data shape to match `rnn` function requirements
-        # Current data input shape: (batch_size, timesteps, n_input)
-        # Required shape: 'timesteps' tensors list of shape (batch_size, n_input)
-
-        # Unstack to get a list of 'timesteps' tensors of shape (batch_size, n_input)
-        x = tf.unstack(x, timesteps, 1)
-
-        # Define a lstm cell with tensorflow
-        lstm_cell = rnn.BasicLSTMCell(num_hidden, forget_bias=1.0)
-
-        # Get lstm cell output
-        outputs, states = rnn.static_rnn(lstm_cell, x, dtype=tf.float32)
-
-        # Linear activation, using rnn inner loop last output
-        return tf.matmul(outputs[-1], weights['out']) + biases['out']
-
     logits = RNN(X, weights, biases)
     prediction = tf.nn.softmax(logits) # prediction-预测
 
@@ -108,45 +87,23 @@ def main():
     correct_pred = tf.equal(tf.argmax(prediction, 1), tf.argmax(Y, 1))
     accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 
+    '''
     # Initialize the variables (i.e. assign their default value)
     # 初始化变量（即分配它们的默认值）
     init = tf.global_variables_initializer()
+    '''
 
     # 声明tf.train.Saver类用于保存/加载模型
     saver = tf.train.Saver() 
 
-
     ''' ********************************************************************************** '''
+
     mnist = input_data.read_data_sets("/tmp/data/", one_hot=True)
-    # Start training
-    # 开始训练
+
     with tf.Session() as sess:
 
-        # Run the initializer
-        # 运行初始化程序
-        sess.run(init)
-
-        for step in range(1, training_steps+1):
-            batch_x, batch_y = mnist.train.next_batch(batch_size)
-            # Reshape data to get 28 seq of 28 elements
-            batch_x = batch_x.reshape((batch_size, timesteps, num_input))
-            # Run optimization op (backprop)  
-            # 运行优化操作（backprop）
-            sess.run(train_op, feed_dict={X: batch_x, Y: batch_y})
-            if step % display_step == 0 or step == 1:
-                # Calculate batch loss and accuracy 
-                # 计算批次损失和准确性
-                loss, acc = sess.run([loss_op, accuracy], feed_dict={X: batch_x,
-                                                                    Y: batch_y})
-                print("Step " + str(step) + ", Minibatch Loss= " + \
-                    "{:.4f}".format(loss) + ", Training Accuracy= " + \
-                    "{:.3f}".format(acc))
-
-        print("Optimization Finished(优化完成)!")
-
-        saver_path = saver.save(sess, "save/model.ckpt")  # 将模型保存到save/model.ckpt文件
-        print("Model saved in file:", saver_path)
-
+        #  即将固化到硬盘中的Session从保存路径再读取出来
+        saver.restore(sess, "save/model.ckpt")
 
         # Calculate accuracy for 128 mnist test images
         # 计算128个mnist测试图像的准确性
@@ -157,13 +114,24 @@ def main():
             sess.run(accuracy, feed_dict={X: test_data, Y: test_label}))
 
         # 分类
-        test_len = 1
+        test_len = 2
         test_data = mnist.test.images[:test_len].reshape((-1, timesteps, num_input))
         test_label = mnist.test.labels[:test_len]
-        print(test_data.shape, test_label)
-        print("分类:", \
-            sess.run(prediction, feed_dict={X: test_data}))
+        print(type(test_data))
+        for i in test_data:
+            print(i)
+        # print(test_data.shap)
 
-            
-if '__name__' == '__main__':
-    print('hello!')
+        print(type(test_label))
+        for i in test_label:
+            print(i)
+        # print(test_label.shap)
+
+        # print(test_data.shape, test_label)
+        # print("分类:", \
+            # sess.run(prediction, feed_dict={X: test_data}))
+
+
+if __name__=='__main__':
+    main()
+

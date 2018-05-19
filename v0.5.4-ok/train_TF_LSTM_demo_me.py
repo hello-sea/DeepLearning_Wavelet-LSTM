@@ -11,16 +11,14 @@ Project: https://github.com/aymericdamien/TensorFlow-Examples/
 from __future__ import print_function
 
 import tensorflow as tf
-from tensorflow.contrib import rnn
+from tensorflow.contrib import rnn 
 
 # Import MNIST data
 from tensorflow.examples.tutorials.mnist import input_data
 
 
-
-
 def RNN(x, weights, biases):
-    timesteps = 28 # timesteps
+    timesteps = 83 # timesteps
     num_hidden = 128 # hidden layer num of features
 
 
@@ -41,7 +39,8 @@ def RNN(x, weights, biases):
     return tf.matmul(outputs[-1], weights['out']) + biases['out']
 
 
-def main():
+
+def MyMain():
 
     '''
     To classify images using a recurrent neural network, we consider every image
@@ -49,6 +48,7 @@ def main():
     handle 28 sequences of 28 steps for every sample.
     '''
 
+  
     # Training Parameters
     learning_rate = 0.001
     # training_steps = 10000
@@ -115,8 +115,11 @@ def main():
     # 声明tf.train.Saver类用于保存/加载模型
     saver = tf.train.Saver() 
 
+    
 
     ''' ********************************************************************************** '''
+    
+    
     mnist = input_data.read_data_sets("/tmp/data/", one_hot=True)
     # Start training
     # 开始训练
@@ -164,6 +167,10 @@ def main():
         print("分类:", \
             sess.run(prediction, feed_dict={X: test_data}))
 
+    
             
-if '__name__' == '__main__':
+if __name__ == "__main__":  
     print('hello!')
+    MyMain()
+
+    
