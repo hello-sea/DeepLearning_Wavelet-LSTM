@@ -1,6 +1,7 @@
 
 from __future__ import print_function
 
+import random
 import tensorflow as tf
 from tensorflow.contrib import rnn
 import numpy as np
@@ -18,11 +19,12 @@ def MyTrain():
     # ndarray
     
     ''' ********************************************************************************** '''
-    batch_size = len(train_data)
+    batch_num = len(train_data)
+    batch_size = len(train_data[0])
     # Training Parameters:
-    learning_rate = 0.05  # 0.1 , 0.001
-    training_steps = 1  # 200 , 400
-    display_step = 50
+    learning_rate = 0.02  # 0.1; 0.001; 0.02
+    training_steps = 1500  # 200 , 400 , 500
+    display_step = 10
 
     # Network Parameters
     num_input = 1
@@ -50,9 +52,9 @@ def MyTrain():
         # Start training
         # 开始训练
         for step in range(1, training_steps+1):
-            # batch_x, batch_y = mnist.train.next_batch(batch_size)
-            batch_x = train_data
-            batch_y = train_labels
+            a  = random.randint(0, batch_num-1)
+            batch_x = train_data[a]
+            batch_y = train_labels[a]
 
             batch_x = batch_x.reshape((batch_size, timesteps, num_input))
             # Run optimization op (backprop)  
@@ -67,6 +69,27 @@ def MyTrain():
                     "{:.4f}".format(loss) + ", Training Accuracy= " + \
                     "{:.3f}".format(acc))
 
+            # 保存训练的模型
+            the_number = 200
+            if step == the_number:
+                saver_path = saver.save(sess, "tf_model_lstm/model_"+ str(the_number) +".ckpt")  # 将模型保存到save/model.ckpt文件
+                print("Model saved in file:", saver_path)
+            
+            the_number = 500
+            if step == the_number:
+                saver_path = saver.save(sess, "tf_model_lstm/model_"+ str(the_number) +".ckpt")  # 将模型保存到save/model.ckpt文件
+                print("Model saved in file:", saver_path)
+            
+            the_number = 1000
+            if step == the_number:
+                saver_path = saver.save(sess, "tf_model_lstm/model_"+ str(the_number) +".ckpt")  # 将模型保存到save/model.ckpt文件
+                print("Model saved in file:", saver_path)
+
+            the_number = 1500
+            if step == the_number:
+                saver_path = saver.save(sess, "tf_model_lstm/model_"+ str(the_number) +".ckpt")  # 将模型保存到save/model.ckpt文件
+                print("Model saved in file:", saver_path)        
+
         print("Optimization Finished(优化完成)!")
 
         # 保存训练的模型
@@ -78,30 +101,37 @@ def MyTrain():
             sess.run(accuracy, feed_dict={X: batch_x, Y: batch_y}))
 
 
-        # 分类
-        out = []
-        for i in range(batch_size):
-            test_data = train_data[i]
-            # test_label = train_labels[i]
+        # # 分类
+        # out = []
+        # test_number = 0
+        # for i in range(batch_size):
+        #     test_data = train_data[test_number][i]
+        #     # test_label = train_labels[test_number][i]
 
-            test_data = test_data.reshape((1, timesteps, num_input))
+        #     test_data = test_data.reshape((1, timesteps, num_input))
+        #     # print(test_data.shape, test_label)
 
-            # print(test_data.shape, test_label)
-
-            # print("分类:", sess.run(prediction, feed_dict={X: test_data}))
-            out_tag = sess.run(prediction, feed_dict={X: test_data})
-            # 获取矩阵值(概率)最大下标
-            j = np.unravel_index( out_tag[0].argmax(), out_tag[0].shape )
-            # print(j)
-            j = j[0]+1
-            out.append(j)
+        #     # print("分类:", sess.run(prediction, feed_dict={X: test_data}))
+        #     out_tag = sess.run(prediction, feed_dict={X: test_data})
+        #     # 获取矩阵值(概率)最大下标
+        #     j = np.unravel_index( out_tag[0].argmax(), out_tag[0].shape )
+        #     # print(j)
+        #     j = j[0]+1
+        #     out.append(j)
         
-        plt.plot( out )
-        plt.show() 
+        # plt.plot( out )
+        # plt.show() 
 
-
+import datetime
 
 if __name__=='__main__':
+    startTime = datetime.datetime.now()
+    
     MyTrain()
+
+    endTime = datetime.datetime.now()
+    print('running time:', (endTime - startTime).seconds)
+
+
 
 

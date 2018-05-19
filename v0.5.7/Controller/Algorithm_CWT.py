@@ -79,10 +79,10 @@ def MyWavelets(data,MyWidths):
 
     ########################################
     # 数据逐帧 0-1标准化
-    print(power.shape)
+    # print(power.shape)
     # power = np.transpose(power) #转置
     power = power.T
-    print(power.shape)
+    # print(power.shape)
 
     # # power_out = np.array([])
     power_out = []

@@ -12,12 +12,16 @@ def use():
     train_data = np.array( pickle.load( open('tf_model_lstm/train_seg_data.plk', 'rb') ) )
     train_labels = np.array( pickle.load( open('tf_model_lstm/train_seg_labels.plk', 'rb') ) )
 
-    print( type( train_data ) )
-    print( train_data.shape )
-    # ndarray
+    print( type( train_data ) )     # ndarray
+    print( train_data.shape )    
+    # for i in range(10):
+    #     print(train_labels[i].shape)
     
     ''' ********************************************************************************** '''
-    batch_size = len(train_data)
+    
+    
+    batch_num = len(train_data)
+    batch_size = len(train_data[0])
     # Training Parameters:
     learning_rate = 0.05  # 0.1 , 0.001
 
@@ -67,16 +71,17 @@ def use():
             out.append(j)
 
         return out 
-
+    
 
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":  
     print('hello!')
-    out = use()
+    use()
+    # out = use()
     
-    plt.plot( out )
-    plt.show()
+    # plt.plot( out )
+    # plt.show()
 
 
 
