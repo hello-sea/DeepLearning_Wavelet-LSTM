@@ -1,0 +1,171 @@
+(C:\ProgramData\Anaconda3) C:\Users\Sea\GitHub\DeepLearning_Wavelet-LSTM\v0.5.7>python tensorflow_train_LSTMs.py
+<class 'numpy.ndarray'>
+(10, 2560, 83)
+WARNING:tensorflow:From C:\Users\Sea\GitHub\DeepLearning_Wavelet-LSTM\v0.5.7\tensorflow_LSTMs.py:59: softmax_cross_entropy_with_logits (from tensorflow.python.ops.nn_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+
+Future major versions of TensorFlow will allow gradients to flow
+into the labels input on backprop by default.
+
+See @{tf.nn.softmax_cross_entropy_with_logits_v2}.
+
+2018-05-20 07:00:49.767214: I T:\src\github\tensorflow\tensorflow\core\platform\cpu_feature_guard.cc:140] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2
+Step 1, Minibatch Loss= 0.7150, Training Accuracy= 0.780
+Step 10, Minibatch Loss= 0.7531, Training Accuracy= 0.604
+Step 20, Minibatch Loss= 0.6526, Training Accuracy= 0.838
+Step 30, Minibatch Loss= 0.7162, Training Accuracy= 0.710
+Step 40, Minibatch Loss= 0.5128, Training Accuracy= 0.792
+Step 50, Minibatch Loss= 0.6462, Training Accuracy= 0.804
+Step 60, Minibatch Loss= 0.5136, Training Accuracy= 0.854
+Step 70, Minibatch Loss= 0.4547, Training Accuracy= 0.817
+Step 80, Minibatch Loss= 0.4703, Training Accuracy= 0.802
+Step 90, Minibatch Loss= 0.6366, Training Accuracy= 0.735
+Step 100, Minibatch Loss= 0.7101, Training Accuracy= 0.654
+Step 110, Minibatch Loss= 0.5694, Training Accuracy= 0.983
+Step 120, Minibatch Loss= 0.7017, Training Accuracy= 0.852
+Step 130, Minibatch Loss= 0.5535, Training Accuracy= 0.784
+Step 140, Minibatch Loss= 0.4046, Training Accuracy= 0.830
+Step 150, Minibatch Loss= 0.5254, Training Accuracy= 0.764
+Step 160, Minibatch Loss= 0.6102, Training Accuracy= 0.800
+Step 170, Minibatch Loss= 0.6324, Training Accuracy= 0.803
+Step 180, Minibatch Loss= 0.6254, Training Accuracy= 0.676
+Step 190, Minibatch Loss= 0.4064, Training Accuracy= 0.826
+Step 200, Minibatch Loss= 0.3660, Training Accuracy= 0.847
+Model saved in file: tf_model_lstm/model_200.ckpt
+Step 210, Minibatch Loss= 0.4068, Training Accuracy= 0.837
+Step 220, Minibatch Loss= 0.5272, Training Accuracy= 0.758
+Step 230, Minibatch Loss= 0.6878, Training Accuracy= 0.656
+Step 240, Minibatch Loss= 0.3641, Training Accuracy= 0.838
+Step 250, Minibatch Loss= 0.4923, Training Accuracy= 0.797
+Step 260, Minibatch Loss= 0.6621, Training Accuracy= 0.642
+Step 270, Minibatch Loss= 0.6223, Training Accuracy= 0.741
+Step 280, Minibatch Loss= 0.6638, Training Accuracy= 0.697
+Step 290, Minibatch Loss= 0.9325, Training Accuracy= 0.803
+Step 300, Minibatch Loss= 0.3507, Training Accuracy= 0.853
+Step 310, Minibatch Loss= 0.3516, Training Accuracy= 0.861
+Step 320, Minibatch Loss= 0.3891, Training Accuracy= 0.833
+Step 330, Minibatch Loss= 0.5046, Training Accuracy= 0.734
+Step 340, Minibatch Loss= 0.5843, Training Accuracy= 0.806
+Step 350, Minibatch Loss= 0.4839, Training Accuracy= 0.761
+Step 360, Minibatch Loss= 0.6379, Training Accuracy= 0.690
+Step 370, Minibatch Loss= 0.5487, Training Accuracy= 0.751
+Step 380, Minibatch Loss= 0.5169, Training Accuracy= 0.690
+Step 390, Minibatch Loss= 0.6011, Training Accuracy= 0.878
+Step 400, Minibatch Loss= 0.3671, Training Accuracy= 0.838
+Step 410, Minibatch Loss= 0.5274, Training Accuracy= 0.762
+Step 420, Minibatch Loss= 0.5374, Training Accuracy= 0.755
+Step 430, Minibatch Loss= 0.9175, Training Accuracy= 0.781
+Step 440, Minibatch Loss= 0.4556, Training Accuracy= 0.813
+Step 450, Minibatch Loss= 0.4785, Training Accuracy= 0.791
+Step 460, Minibatch Loss= 0.5190, Training Accuracy= 0.771
+Step 470, Minibatch Loss= 0.3312, Training Accuracy= 0.861
+Step 480, Minibatch Loss= 0.3032, Training Accuracy= 0.873
+Step 490, Minibatch Loss= 0.5286, Training Accuracy= 0.824
+Step 500, Minibatch Loss= 0.5362, Training Accuracy= 0.750
+Model saved in file: tf_model_lstm/model_500.ckpt
+Step 510, Minibatch Loss= 0.4717, Training Accuracy= 0.816
+Step 520, Minibatch Loss= 0.3410, Training Accuracy= 0.859
+Step 530, Minibatch Loss= 0.3232, Training Accuracy= 0.864
+Step 540, Minibatch Loss= 0.4217, Training Accuracy= 0.824
+Step 550, Minibatch Loss= 0.5152, Training Accuracy= 0.791
+Step 560, Minibatch Loss= 0.5157, Training Accuracy= 0.761
+Step 570, Minibatch Loss= 0.3958, Training Accuracy= 0.830
+Step 580, Minibatch Loss= 0.8830, Training Accuracy= 0.782
+Step 590, Minibatch Loss= 0.6373, Training Accuracy= 0.620
+Step 600, Minibatch Loss= 0.4896, Training Accuracy= 0.689
+Step 610, Minibatch Loss= 0.4017, Training Accuracy= 0.828
+Step 620, Minibatch Loss= 0.8161, Training Accuracy= 0.575
+Step 630, Minibatch Loss= 0.3118, Training Accuracy= 0.854
+Step 640, Minibatch Loss= 0.4803, Training Accuracy= 0.834
+Step 650, Minibatch Loss= 0.3343, Training Accuracy= 0.865
+Step 660, Minibatch Loss= 0.3175, Training Accuracy= 0.866
+Step 670, Minibatch Loss= 0.4937, Training Accuracy= 0.824
+Step 680, Minibatch Loss= 0.6479, Training Accuracy= 0.785
+Step 690, Minibatch Loss= 0.6301, Training Accuracy= 0.778
+Step 700, Minibatch Loss= 0.5040, Training Accuracy= 0.751
+Step 710, Minibatch Loss= 0.4653, Training Accuracy= 0.826
+Step 720, Minibatch Loss= 0.5194, Training Accuracy= 0.806
+Step 730, Minibatch Loss= 0.6518, Training Accuracy= 0.781
+Step 740, Minibatch Loss= 0.4668, Training Accuracy= 0.930
+Step 750, Minibatch Loss= 0.7207, Training Accuracy= 0.729
+Step 760, Minibatch Loss= 0.4600, Training Accuracy= 0.768
+Step 770, Minibatch Loss= 0.2890, Training Accuracy= 0.871
+Step 780, Minibatch Loss= 0.4417, Training Accuracy= 0.809
+Step 790, Minibatch Loss= 0.6889, Training Accuracy= 0.734
+Step 800, Minibatch Loss= 0.4673, Training Accuracy= 0.765
+Step 810, Minibatch Loss= 0.3063, Training Accuracy= 0.929
+Step 820, Minibatch Loss= 0.4818, Training Accuracy= 0.761
+Step 830, Minibatch Loss= 0.6420, Training Accuracy= 0.715
+Step 840, Minibatch Loss= 0.3278, Training Accuracy= 0.846
+Step 850, Minibatch Loss= 0.4446, Training Accuracy= 0.788
+Step 860, Minibatch Loss= 0.4064, Training Accuracy= 0.768
+Step 870, Minibatch Loss= 0.4683, Training Accuracy= 0.757
+Step 880, Minibatch Loss= 0.2663, Training Accuracy= 0.881
+Step 890, Minibatch Loss= 0.5579, Training Accuracy= 0.741
+Step 900, Minibatch Loss= 0.5937, Training Accuracy= 0.644
+Step 910, Minibatch Loss= 0.3877, Training Accuracy= 0.763
+Step 920, Minibatch Loss= 0.3859, Training Accuracy= 0.827
+Step 930, Minibatch Loss= 0.3866, Training Accuracy= 0.843
+Step 940, Minibatch Loss= 0.7885, Training Accuracy= 0.721
+Step 950, Minibatch Loss= 0.4075, Training Accuracy= 0.829
+Step 960, Minibatch Loss= 0.4380, Training Accuracy= 0.800
+Step 970, Minibatch Loss= 0.3574, Training Accuracy= 0.801
+Step 980, Minibatch Loss= 0.5314, Training Accuracy= 0.861
+Step 990, Minibatch Loss= 0.3981, Training Accuracy= 0.852
+Step 1000, Minibatch Loss= 0.7555, Training Accuracy= 0.724
+Model saved in file: tf_model_lstm/model_1000.ckpt
+Step 1010, Minibatch Loss= 0.5924, Training Accuracy= 0.691
+Step 1020, Minibatch Loss= 0.2590, Training Accuracy= 0.941
+Step 1030, Minibatch Loss= 0.3606, Training Accuracy= 0.857
+Step 1040, Minibatch Loss= 1.0135, Training Accuracy= 0.595
+Step 1050, Minibatch Loss= 0.8767, Training Accuracy= 0.578
+Step 1060, Minibatch Loss= 0.2584, Training Accuracy= 0.860
+Step 1070, Minibatch Loss= 0.2462, Training Accuracy= 0.937
+Step 1080, Minibatch Loss= 0.5030, Training Accuracy= 0.775
+Step 1090, Minibatch Loss= 0.1982, Training Accuracy= 0.950
+Step 1100, Minibatch Loss= 0.2035, Training Accuracy= 0.955
+Step 1110, Minibatch Loss= 0.4457, Training Accuracy= 0.727
+Step 1120, Minibatch Loss= 0.4839, Training Accuracy= 0.768
+Step 1130, Minibatch Loss= 0.2921, Training Accuracy= 0.893
+Step 1140, Minibatch Loss= 0.4271, Training Accuracy= 0.850
+Step 1150, Minibatch Loss= 0.4142, Training Accuracy= 0.856
+Step 1160, Minibatch Loss= 0.3834, Training Accuracy= 0.819
+Step 1170, Minibatch Loss= 0.5139, Training Accuracy= 0.845
+Step 1180, Minibatch Loss= 0.4752, Training Accuracy= 0.740
+Step 1190, Minibatch Loss= 0.4183, Training Accuracy= 0.840
+Step 1200, Minibatch Loss= 0.2477, Training Accuracy= 0.940
+Step 1210, Minibatch Loss= 0.5137, Training Accuracy= 0.790
+Step 1220, Minibatch Loss= 0.6398, Training Accuracy= 0.695
+Step 1230, Minibatch Loss= 0.3747, Training Accuracy= 0.866
+Step 1240, Minibatch Loss= 0.3873, Training Accuracy= 0.780
+Step 1250, Minibatch Loss= 0.3688, Training Accuracy= 0.940
+Step 1260, Minibatch Loss= 0.7541, Training Accuracy= 0.716
+Step 1270, Minibatch Loss= 0.2011, Training Accuracy= 0.964
+Step 1280, Minibatch Loss= 0.4656, Training Accuracy= 0.777
+Step 1290, Minibatch Loss= 0.2629, Training Accuracy= 0.928
+Step 1300, Minibatch Loss= 0.2126, Training Accuracy= 0.946
+Step 1310, Minibatch Loss= 0.2450, Training Accuracy= 0.947
+Step 1320, Minibatch Loss= 0.5921, Training Accuracy= 0.696
+Step 1330, Minibatch Loss= 0.3037, Training Accuracy= 0.894
+Step 1340, Minibatch Loss= 0.3191, Training Accuracy= 0.868
+Step 1350, Minibatch Loss= 0.2505, Training Accuracy= 0.937
+Step 1360, Minibatch Loss= 0.3455, Training Accuracy= 0.858
+Step 1370, Minibatch Loss= 0.4872, Training Accuracy= 0.764
+Step 1380, Minibatch Loss= 0.2285, Training Accuracy= 0.936
+Step 1390, Minibatch Loss= 0.4162, Training Accuracy= 0.788
+Step 1400, Minibatch Loss= 0.3234, Training Accuracy= 0.935
+Step 1410, Minibatch Loss= 0.2060, Training Accuracy= 0.950
+Step 1420, Minibatch Loss= 0.3816, Training Accuracy= 0.800
+Step 1430, Minibatch Loss= 0.4086, Training Accuracy= 0.821
+Step 1440, Minibatch Loss= 0.2172, Training Accuracy= 0.934
+Step 1450, Minibatch Loss= 0.5374, Training Accuracy= 0.719
+Step 1460, Minibatch Loss= 0.4758, Training Accuracy= 0.784
+Step 1470, Minibatch Loss= 0.5595, Training Accuracy= 0.693
+Step 1480, Minibatch Loss= 0.2252, Training Accuracy= 0.945
+Step 1490, Minibatch Loss= 0.3741, Training Accuracy= 0.792
+Step 1500, Minibatch Loss= 0.5066, Training Accuracy= 0.769
+Model saved in file: tf_model_lstm/model_1500.ckpt
+Optimization Finished(优化完成)!
+Model saved in file: tf_model_lstm/model.ckpt
+Testing Accuracy(测试集正确率): 0.769141
+running time: 11043
