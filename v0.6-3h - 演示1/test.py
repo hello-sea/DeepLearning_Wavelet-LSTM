@@ -1,133 +1,115 @@
-# -*- coding: utf-8 -*-
 
-from PyQt5 import QtWidgets
-# 导入matplotlib模块并使用Qt5Agg
-import matplotlib
-matplotlib.use('Qt5Agg')
-# 使用 matplotlib中的FigureCanvas (在使用 Qt5 Backends中 FigureCanvas继承自QtWidgets.QWidget)
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+from __future__ import print_function
 
+import random
+import tensorflow as tf
+from tensorflow.contrib import rnn
 import numpy as np
+import matplotlib.pyplot as plt
+import pickle as pickle     # python pkl 文件读写
 
-''' ==================== ↓  绘图类   ↓ ==================== '''
-class MyFigureCanvas(QtWidgets.QWidget):
-    def __init__(self,figureNumber): 
-        super(MyFigureCanvas, self).__init__()
-        
-        ''' 严重警告: self.figure = plt.figure( 0 ) 0是指定全局标识 '''
-        self.figureNumber = figureNumber
-        self.figure = plt.figure(self.figureNumber)
+from tensorflow_LSTMs import MyNetworks
 
-        self.canvas = FigureCanvas(self.figure)
-        
-        self.layout = QtWidgets.QGridLayout()
-        self.layout.setContentsMargins(0, 0, 0, 0)
-        self.layout.setSpacing(0) #设置总的外围边框
-        self.layout.addWidget(self.canvas)
-        self.setLayout(self.layout)
+def MyTrain():
+    train_data = np.array(pickle.load(open('tf_model_lstm/train_seg_data.plk', 'rb')) )
+    train_labels = np.array(pickle.load(open('tf_model_lstm/train_seg_labels.plk', 'rb')) )
 
-        self.axList = []
-
-        self.numberOfRows = 1 #图片个数 (排列行数),默认为 1
-        self.leftMargin = 40
-        self.topMargin = 5
-        self.rightMargin = 5
-        self.bottomMargin = 20
-
-    def setAx(self, lineNumber, numberOfRows, MyProjection): 
-        # lineNumber: 第几行, numberOfRows: 行数
-        # 如 setAx(0,1) 表示 第 1 行, 共 1 行
-        ''' 
-        def paint(self, data, lineNumber, numberOfRows, leftMargin, topMargin, rightMargin, bottomMargin):
-            self.lineNumber = lineNumber
-            self.numberOfRows = numberOfRows
-            self.leftMargin = leftMargin
-            self.topMargin = topMargin
-            self.rightMargin = rightMargin
-            self.bottomMargin = bottomMargin
-        '''
-        pass
-        ''' ax = self.figure.add_axes([0.05,0.05,0.9,0.9])
-            ax = self.figure.add_subplot(5,1,1)     
-        '''
-        self.numberOfRows = numberOfRows
-        self.x = self.leftMargin/self.width()
-        self.y = ( self.height()*(self.numberOfRows - (lineNumber + 1 ) ) /self.numberOfRows + self.bottomMargin )/self.height()
-        self.w = (self.width() - self.leftMargin - self.rightMargin)/self.width()
-        self.h = (self.height()/self.numberOfRows - self.topMargin - self.bottomMargin)/self.height()
-        
-        if MyProjection == '3d':
-            # ax = self.figure.add_axes([self.x, self.y, self.w, self.h],projection='3d')
-            ax = self.figure.add_axes([self.x, self.y, self.w, self.h],projection = MyProjection)
-            ax.set_ylabel("scale")
-            ax.set_xlabel("time")
-            # ax.set_title("a straight line (OO)")
-        else :
-            ax = self.figure.add_axes([self.x, self.y, self.w, self.h])
-            # ax.set_xlabel("x value")
-            # ax.set_ylabel("y value")
-            # ax.set_title("a straight line (OO)")
-        
-        self.axList.append( ax )        
-
-        
-    def paint(self, lineNumber, data):
-        # lineNumber: 第几行, data: 绘图数据
-        pass
+    print( type(train_data) )
+    print( train_data.shape )
+    # ndarray
     
-    def figureClear(self):
-        self.figure.clf()
-        self.axList = []
+    ''' ********************************************************************************** '''
+    batch_num = len(train_data)
+    batch_size = len(train_data[0])
+    # Training Parameters:
+    learning_rate = 0.02  # 0.1; 0.001; 0.02
+    training_steps = 1500  # 200 , 400 , 500
+    display_step = 10
 
-class MyFigureCanvasFFT(MyFigureCanvas):
-    def paint(self, lineNumber, data):
-        self.axList[lineNumber].clear()
-        self.axList[lineNumber].plot(data, 'k') # k 黑色
-        self.canvas.draw()
+    # Network Parameters
+    num_input = 1
+    timesteps = 83 # timesteps
+    num_hidden = 200 # hidden layer num of features
+    num_classes = 4 # MNIST total classes (1-4 digits)
+    
+    # 定义神经网络
+    train_op, loss_op, prediction, accuracy, X, Y = MyNetworks(learning_rate, num_input, timesteps, num_hidden, num_classes)
 
-class MyFigureCanvasCWT(MyFigureCanvas):     
-    def MyMatshow(self, lineNumber, data): 
-        self.axList[lineNumber].clear()
-        self.axList[lineNumber].matshow(data)
-        self.canvas.draw()
 
-    def My3DView_init(self,lineNumber,MyElev,MyAzim):
-        '''     - lineNumber：指定第几幅图
-            view_init(elev=MyElev,azim=MyAzim) 
-                - elev: 竖直 角度
-                - azim: 水平 角度
-        '''
-        self.axList[lineNumber].view_init(elev=MyElev,azim=MyAzim)
+    # 声明tf.train.Saver类用于保存/加载模型
+    saver = tf.train.Saver() 
 
-    def MyPlot_surface(self, lineNumber, data, stepX, stepY):
-        ''' stepX = 2  # 采样步长 X
-            stepY = 10  # 采样步长 Y
-        '''
-        # ax = self.figure.add_axes([0.05,0.05,0.9,0.9],projection='3d')
-        # ax = Axes3D( self.figure )
+    with tf.Session() as sess:
 
-        X = range(0, len(data), stepX)      #频率
-        Y = range(0, len(data[0]), stepY)   #时间
+        # Initialize the variables (i.e. assign their default value)
+        # 初始化变量（即分配它们的默认值）
+        init = tf.global_variables_initializer()
+    
+        # Run the initializer
+        # 运行初始化程序
+        sess.run(init)
 
-        XX , YY= np.meshgrid(X, Y)  # XX[i]、YY[i]代表时间 ; XX[0][i]、YY[0][i]代表频率
-        ZZ = np.zeros([len( Y ), len( X )])  # ZZ[i]代表时间、ZZ[0][i]代表频率
+        # Start training
+        # 开始训练
+        for step in range(1, training_steps+1):
+            a  = random.randint(0, batch_num-1)
+            batch_x = train_data[a]
+            batch_y = train_labels[a]
 
-        for i in range(0, len( Y )):
-            for j in range(0, len( X )):
-                ZZ[i][j] = data[ X[j] ][ Y[i] ]
+            batch_x = batch_x.reshape((batch_size, timesteps, num_input))
+            # Run optimization op (backprop)  
+            # 运行优化操作（backprop）
+            sess.run(train_op, feed_dict={X: batch_x, Y: batch_y})
+            if step % display_step == 0 or step == 1:
+                # Calculate batch loss and accuracy 
+                # 计算批次损失和准确性
+                loss, acc = sess.run([loss_op, accuracy], feed_dict={X: batch_x,
+                                                                    Y: batch_y})
+                print("Step " + str(step) + ", Minibatch Loss= " + \
+                    "{:.4f}".format(loss) + ", Training Accuracy= " + \
+                    "{:.3f}".format(acc))
 
-        # 具体函数方法可用 help(function) 查看，如：help(ax.plot_surface)
-        self.axList[lineNumber].plot_surface(XX, YY, ZZ, rstride=1, cstride=1, cmap='rainbow')
-        
-        # self.canvas.draw()
+            # 保存训练的模型
+            the_number = 200
+            if step == the_number:
+                saver_path = saver.save(sess, "tf_model_lstm/model_"+ str(the_number) +".ckpt")  # 将模型保存到save/model.ckpt文件
+                print("Model saved in file:", saver_path)
+            
+            the_number = 500
+            if step == the_number:
+                saver_path = saver.save(sess, "tf_model_lstm/model_"+ str(the_number) +".ckpt")  # 将模型保存到save/model.ckpt文件
+                print("Model saved in file:", saver_path)
+            
+            the_number = 1000
+            if step == the_number:
+                saver_path = saver.save(sess, "tf_model_lstm/model_"+ str(the_number) +".ckpt")  # 将模型保存到save/model.ckpt文件
+                print("Model saved in file:", saver_path)
 
-class MyFigureCanvasLSTM(MyFigureCanvas):
-    def paint(self, lineNumber, data):
-        pass
-        self.axList[lineNumber].clear()
-        self.axList[lineNumber].plot(data, 'k') # k 黑色
-        self.canvas.draw()
+            the_number = 1500
+            if step == the_number:
+                saver_path = saver.save(sess, "tf_model_lstm/model_"+ str(the_number) +".ckpt")  # 将模型保存到save/model.ckpt文件
+                print("Model saved in file:", saver_path)        
+
+        print("Optimization Finished(优化完成)!")
+
+        # 保存训练的模型
+        saver_path = saver.save(sess, "tf_model_lstm/model.ckpt")  # 将模型保存到save/model.ckpt文件
+        print("Model saved in file:", saver_path)
+
+        # 测试集正确率
+        print("Testing Accuracy(测试集正确率):", \
+            sess.run(accuracy, feed_dict={X: batch_x, Y: batch_y}))
+
+import datetime
+
+if __name__=='__main__':
+    startTime = datetime.datetime.now()
+    
+    MyTrain()
+    
+    endTime = datetime.datetime.now()
+    print('running time:', (endTime - startTime).seconds)
+
+
 
 
