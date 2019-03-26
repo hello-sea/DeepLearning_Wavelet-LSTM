@@ -32,6 +32,5 @@
 ### 软件系统架构
 ![avatar](./demo/[5]软件系统架构.png)
 
-
-
-
+# License
+[MIT](./LICENSE)
